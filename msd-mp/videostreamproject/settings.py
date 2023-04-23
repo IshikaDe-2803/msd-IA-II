@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'users_api',
     'rest_framework',
     'main_app',
+    'video_api',
 ]
 
 MIDDLEWARE = [
