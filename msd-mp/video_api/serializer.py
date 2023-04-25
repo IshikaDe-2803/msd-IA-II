@@ -3,4 +3,4 @@ from .models import NewVideo
 class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewVideo
-        fields = ["user", "title", "description", "visits", "likes", "dislikes", "date", "thumbnail", "video"]
+        fields = ["id", "user", "title", "description", "visits", "likes", "dislikes", "date", "thumbnail", "video"]

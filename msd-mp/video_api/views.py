@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework import permissions
 from .models import NewVideo
 from .serializer import VideoSerializer
+from django.http import Http404
 
 class VideoListApiView(APIView):
     # add permission to check if user is authenticated
@@ -24,39 +25,45 @@ class VideoListApiView(APIView):
     def post(self, request, *args, **kwargs):
         '''
         '''
-        data = {
-            "user": request.user.id,
-            "title": request.data.get('title'),
-            "description": request.data.get('description'), 
-            "thumbnail": request.FILES.get('thumbnail'),
-            "video": request.FILES.get('video'),
-        }
-        serializer = VideoSerializer(data=data)
+        # data = {
+        #     "user": request.user.id,
+        #     "title": request.data.get('title'),
+        #     "description": request.data.get('description'), 
+        #     "thumbnail": request.FILES.get('thumbnail'),
+        #     "video": request.FILES.get('video'),
+        # }
+        serializer = VideoSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def update(self, request, *args, **kwargs):
-        video = NewVideo.objects.filter(user=request.user.id, title=request.data.get('title'))
-        data = {
-            "visits": request.data.get('visits'),
-            "likes": request.data.get('likes'),
-            "dislikes": request.data.get('dislikes'),
-            "user": request.user.id,
-            "title": request.data.get('title'),
-            "description": request.data.get('description'), 
-            "thumbnail": request.FILES.get('thumbnail'),
-            "video": request.FILES.get('video'),
-        }
-        serializer = VideoSerializer(data=data)
+class VideoDetailApiView(APIView):
+    # add permission to check if user is authenticated
+    serializer_class = VideoSerializer
+    permission_classes = [permissions.IsAuthenticated] 
+
+    def get_video(self, pk):
+        try:
+            return NewVideo.objects.get(pk=pk)
+        except NewVideo.DoesNotExist:
+            raise Http404
+    
+    def get(self, request, pk, *args, **kwargs):
+        video = self.get_video(pk=pk)
+        serializer = VideoSerializer(video)
+        return Response(serializer.data)
+
+    def patch(self, request, pk, *args, **kwargs):
+        video = NewVideo.objects.get(pk=pk)
+        serializer = VideoSerializer(video, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def delete(self, request, *args, **kwargs):
-        videos = NewVideo.objects.filter(user=request.user.id, title=request.data.get('title'))
+    def delete(self, request, pk, *args, **kwargs):
+        videos = NewVideo.objects.get(pk=pk)
         videos.delete()
         return Response(status = status.HTTP_204_NO_CONTENT)
