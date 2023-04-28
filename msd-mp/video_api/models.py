@@ -2,9 +2,10 @@ from django.db import models
 
 # Create your models here.
 from django.db import models
-from django.db.models.fields import CharField, TextField
+from django.db.models.fields import CharField, TextField, DateField
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
+import datetime
 
 class NewVideo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default="")
@@ -13,7 +14,7 @@ class NewVideo(models.Model):
     visits= models.IntegerField(default="0")
     likes = models.IntegerField(default="0")
     dislikes = models.IntegerField(default="0")
-    date = models.CharField(default=" ", max_length=100)
+    date = models.DateField(default=datetime.date.today)
     thumbnail = models.ImageField(upload_to='thumbnail_uploaded', default=None)
     video = models.FileField(upload_to='videos_uploaded', validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])], default=None)
 

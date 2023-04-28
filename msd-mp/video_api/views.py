@@ -1,23 +1,22 @@
-# todo/todo_api/views.py
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework import permissions
+# from rest_framework import permissions    
 from .models import NewVideo
 from .serializer import VideoSerializer
 from django.http import Http404
+from rest_framework.parsers import MultiPartParser
 
 class VideoListApiView(APIView):
-    # add permission to check if user is authenticated
     serializer_class = VideoSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    parser_classes = (MultiPartParser, )
 
     # 1. List all
     def get(self, request, *args, **kwargs):
         '''
         List all the video items for given requested user
         '''
-        videos = NewVideo.objects.filter(user = request.user.id)
+        videos = NewVideo.objects.all()
         serializer = VideoSerializer(videos, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -26,7 +25,15 @@ class VideoListApiView(APIView):
         '''
         Post a video item
         '''
-        serializer = VideoSerializer(data=request.data)
+        data = {
+            "user": request.data.get('user'),
+            "username": request.data.get('username'),
+            "title": request.data.get('title'),
+            "description": request.data.get('description'), 
+            "thumbnail": request.FILES.get('thumbnail'),
+            "video": request.FILES.get('video'),
+        }
+        serializer = VideoSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -34,9 +41,7 @@ class VideoListApiView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class VideoDetailApiView(APIView):
-    # add permission to check if user is authenticated
     serializer_class = VideoSerializer
-    permission_classes = [permissions.IsAuthenticated] 
 
     def get_video(self, pk):
         try:
@@ -70,3 +75,24 @@ class VideoDetailApiView(APIView):
         videos = NewVideo.objects.get(pk=pk)
         videos.delete()
         return Response(status = status.HTTP_204_NO_CONTENT)
+
+class VideoTrendingApiView(APIView):
+    serializer_class = VideoSerializer
+    def get(self, request, *args, **kwargs):
+        '''
+        List all the video items for given requested user
+        '''
+        videos = sorted(NewVideo.objects.all(), key=lambda x: x.visits, reverse=True)[0:10]
+        serializer = VideoSerializer(videos, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class VideoSearchApiView(APIView):
+    serializer_class = VideoSerializer
+
+    def get(self, request, query, *args, **kwargs):
+        '''
+        List all the video items for given requested user
+        '''
+        videos = NewVideo.objects.filter(Q(title__icontains=query))
+        serializer = VideoSerializer(videos, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

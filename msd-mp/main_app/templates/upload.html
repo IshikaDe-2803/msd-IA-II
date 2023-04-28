@@ -1,0 +1,69 @@
+{% extends "./base.html" %} {% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}
+<title>Video Upload</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script src="{% static 'js/animations.js' %}"></script>
+<link rel="icon" type="image/x-icon" href="{% static 'images/stream.png' %}">
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock title %}
+
+{% block content %}
+
+<div id="wrapper">
+  <div class="logo-styles">
+    <a href="{% url 'homepage' %}"><img src="{% static 'images/stream.png' %}" style="width:80px ;height: 80px;"
+        alt="VideoBox"></a>
+  </div>
+
+  <div class="upload-container">
+    <h2>Upload Video</h2>
+    <form method="post" class="upload-form" enctype="multipart/form-data"  id="upload-form">
+      {% csrf_token %}
+
+      <label for="title" style="color: black;">Title: </label>
+      <input type="text" class="form-control" value="" name="title" id="title" placeholder="Title goes here"
+        required><br>
+      <label for="desc" style="color: black;">Description: </label>
+      <textarea type="text" value="" class="form-control" name="desc" placeholder="Description..." name="message"
+        id="msg" rows="6" cols="6"></textarea>
+      <label for="thumbnail" style="color: black;">Upload Thumbnail: </label>
+      <input type="file" class="form-control" value="" name="thumbnail" id="link"
+        placeholder="Copy paste youtube video link"><br>
+      <label for="video" style="color: black;">Upload Video: </label>
+      <input type="file" class="form-control" value="" name="video" id="link"
+        placeholder="Copy paste youtube video link"><br>
+      <button class="btn btn-success" type="submit" id="submit-button">Submit</button>
+    </form>
+  </div>
+</div>
+<!-- <script>
+  $(document).ready(function() {
+    $('#upload-form').submit(function(event) {
+      event.preventDefault();
+      var formData = new FormData($(this)[0]);
+      console.log(formData)
+      $.ajax({
+        url: 'http://127.0.0.1:8000/api/videoapi/',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+          alert('Video uploaded successfully!');
+        },
+        error: function(response) {
+          alert('Error uploading video.');
+        }
+      });
+    });
+  });
+</script> -->
+
+
+
+
+{% endblock content %}

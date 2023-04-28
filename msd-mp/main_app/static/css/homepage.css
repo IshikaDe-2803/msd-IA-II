@@ -1,0 +1,312 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap");
+
+* {
+    margin: 0;
+}
+
+#wrapper {
+    display: none;
+}
+
+a {
+    text-decoration: none;
+    outline: none;
+    color: inherit;
+}
+
+.header_section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    /* background-color: white; */
+    background-image: linear-gradient(45deg,
+            rgba(66, 183, 245, 0.8) 0%,
+            rgba(66, 245, 189, 0.4) 100%);
+}
+
+.search-input {
+    width: 100%;
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    padding: 15px 45px 15px 15px;
+    background-color: #f1f1f3;
+    color: #6c6c6c;
+    border-radius: 6px;
+    border: none;
+    transition: all 0.4s;
+}
+
+.search-input:focus {
+    border: none;
+    outline: none;
+    box-shadow: 0 1px 12px #b8c6db;
+    -moz-box-shadow: 0 1px 12px #b8c6db;
+    -webkit-box-shadow: 0 1px 12px #b8c6db;
+}
+
+.search-btn {
+    background-color: transparent;
+    font-size: 18px;
+    padding: 6px 9px;
+    margin-left: -60px;
+    border: none;
+    color: #000000;
+    transition: all 0.4s;
+    z-index: 10;
+}
+
+.search-btn:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+    color: black;
+}
+
+.search-btn:focus {
+    outline: none;
+    color: black;
+}
+
+h1 {
+    margin-left: 10px;
+}
+
+.logo-styles {
+    height: 50px;
+    object-fit: cover;
+    margin-left: 20px;
+}
+
+.account_section {
+    display: flex;
+    align-items: center;
+}
+
+.search_section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    /* border: 1px solid black; */
+    border-radius: 1px;
+    padding: 0px;
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-bottom: 0px;
+}
+
+.search_section>input {
+    flex: 1;
+    border: none;
+    justify-content: center;
+}
+
+.search_section>input:focus {
+    outline: none;
+}
+
+.search_section>i {
+    width: 50px;
+    background-color: rgb(3, 53, 110);
+    border-left: 1px solid rgb(3, 53, 110);
+    padding-bottom: 4px;
+}
+
+.fa-search {
+    padding-left: 20px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.fa-search:before {
+    padding-left: 10%;
+    content: "\f002";
+    color: white;
+    margin-top: 10px;
+}
+
+.left_section {
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    background-color: none;
+}
+
+.hamburger {
+    padding-top: 20px;
+}
+
+/* The sidebars */
+
+.main_code_body {
+    display: flex;
+    height: 100%;
+}
+
+.SideBars {
+    flex: 0.17;
+    /* background-color:white; */
+    /* background-color: rgba(88, 192, 248, 0.8); */
+    background-image: linear-gradient(135deg,
+            rgba(66, 183, 245, 0.8) 0%,
+            rgba(66, 245, 189, 0.4) 100%);
+}
+
+.TheVideoSection {
+    flex: 0.83;
+    /* background-color: #f9f9f9; */
+    background-image: url(../images/spikes.png);
+    padding: 20px 20px;
+    padding-bottom: 0;
+}
+
+.TheVideoSection>h2 {
+    margin-left: 5px;
+    margin-bottom: 20px;
+    font-family: "Roboto", sans-serif;
+}
+
+.VideoCard {
+    width: 270px;
+    padding-top: 15px;
+    margin-bottom: 30px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.AllVideos {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.video_thumbnail {
+    height: 140px;
+    width: 250px;
+    border-radius: 10px;
+}
+
+.VideoCard:hover {
+    border-radius: 20px;
+    transition: 1s;
+    background-color: #d7d7d8;
+    height: 260px;
+}
+
+.videoCard_info {
+    display: flex;
+    margin-top: 10px;
+    padding-right: 30px;
+}
+
+.video_text {
+    margin-left: 10px;
+}
+
+.video_text>h4 {
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-family: "Roboto", sans-serif;
+}
+
+.video_text>p {
+    font-size: 13px;
+    color: gray;
+    font-family: "Roboto", sans-serif;
+}
+
+.VideoAvatar {
+    height: 50px !important;
+    color: rgb(80, 74, 74);
+}
+
+.sidebars_field {
+    display: flex;
+    align-items: center;
+    margin-top: 4px;
+    padding: 10px 20px;
+}
+
+.sidebars_field:hover {
+    background-color: rgb(253, 249, 249);
+    cursor: pointer;
+}
+
+.sidebars_field:hover>.icon_sidebar {
+    color: rgb(4, 46, 94);
+}
+
+.sidebars_field:hover>.sidebar_text {
+    font-weight: bolder;
+}
+
+.sidebars_field.selected {
+    background-color: lightgray;
+}
+
+.icon_sidebar {
+    margin-left: 15px;
+    margin-right: 20px;
+    color: #131212;
+    font-size: large !important;
+}
+
+.sidebar_text {
+    color: #131212;
+    font-size: 0.8rem;
+    flex: 1;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    font-family: "Roboto", sans-serif;
+}
+
+.Next_ROW {
+    height: 1px;
+    border: 0;
+    background-color: lightgray;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.AuthButton {
+    padding: 8px 15px;
+    border: none;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    background: #285fd4;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+    transition: 0.5s all;
+    margin-right: 1.5em;
+    font-weight: 400;
+}
+
+.AuthButton:hover {
+    font-weight: 500;
+    font-size: 13.5px;
+    box-shadow: 0 20px 50px rgba(232, 235, 236, 0.7);
+    background: #285fd4;
+    border: 2px solid #fff;
+}
+
+.LogoutButton {
+    display: flex;
+    width: auto;
+    padding-right: 10px;
+    padding-left: 0;
+    background-color: inherit;
+    border: none;
+}
+
+.LogoutButton:hover {
+    background-color: lightgray;
+}
