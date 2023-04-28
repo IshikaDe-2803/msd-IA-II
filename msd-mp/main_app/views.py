@@ -14,7 +14,12 @@ import requests
 # Create your views here.
 
 def homepage(request):
-    videos = requests.get('http://localhost:8000/api/videoapi/').json()
+    if request.method =='GET' and 'search_query' in request.GET:
+        query = request.GET.get('search_query')
+        # videos = NewVideo.objects.filter(Q(title__icontains=query))
+        videos = requests.get('http://localhost:8000/api/videoapi/' + 'search/' + query).json()
+    else:
+        videos = requests.get('http://localhost:8000/api/videoapi/').json()
     print(videos)
     return render(request, 'homepage.html', {'videos':videos})
 
@@ -22,9 +27,6 @@ def trending(request):
     videos = requests.get('http://127.0.0.1:8000/api/videoapi/trending').json()
     print(videos)
     return render(request, 'trending.html', {'trending':videos})
-
-def search(request):
-    pass
 
 def upload(request):
     if request.method == "POST":
@@ -49,7 +51,7 @@ def upload(request):
 
 @login_required
 def logout(request):
-    # auth_logout(request)
+    auth_logout(request)
     messages.success(request, "Logged out successfully!")
     return redirect("homepage")
 

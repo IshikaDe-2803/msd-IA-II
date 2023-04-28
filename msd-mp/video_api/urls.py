@@ -6,7 +6,7 @@ urlpatterns = [
     path('', VideoListApiView.as_view()),
     path('<int:pk>', VideoDetailApiView.as_view()), 
     path('trending', VideoTrendingApiView.as_view()), 
-    path('<>', VideoSearchApiView.as_view())  
+    path('search/<query>', VideoSearchApiView.as_view())  
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

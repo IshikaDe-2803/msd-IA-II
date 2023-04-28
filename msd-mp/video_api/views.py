@@ -6,6 +6,7 @@ from .models import NewVideo
 from .serializer import VideoSerializer
 from django.http import Http404
 from rest_framework.parsers import MultiPartParser
+from django.db.models import Q
 
 class VideoListApiView(APIView):
     serializer_class = VideoSerializer
