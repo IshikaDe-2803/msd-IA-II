@@ -63,7 +63,14 @@ class VideoDetailApiView(APIView):
     '''
     def patch(self, request, pk, *args, **kwargs):
         video = NewVideo.objects.get(pk=pk)
-        serializer = VideoSerializer(video, data=request.data, partial=True)
+        data = {
+            "user": request.data.get("user"),
+            "likes": request.data.get("likes"),
+            "dislikes": request.data.get("dislikes"), 
+            "visits": request.data.get("visits"), 
+            "id": request.data.get("id"),             
+        }
+        serializer = VideoSerializer(video, data=data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

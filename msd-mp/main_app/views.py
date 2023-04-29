@@ -20,12 +20,10 @@ def homepage(request):
         videos = requests.get('http://localhost:8000/api/videoapi/' + 'search/' + query).json()
     else:
         videos = requests.get('http://localhost:8000/api/videoapi/').json()
-    print(videos)
     return render(request, 'homepage.html', {'videos':videos})
 
 def trending(request):
     videos = requests.get('http://127.0.0.1:8000/api/videoapi/trending').json()
-    print(videos)
     return render(request, 'trending.html', {'trending':videos})
 
 def upload(request):
@@ -40,8 +38,6 @@ def upload(request):
             'thumbnail': request.FILES.get('thumbnail'),
             'video': request.FILES.get('video'),
         }
-        print(data)
-        print(files['thumbnail'])
         # make the API request
         response = requests.post('http://127.0.0.1:8000/api/videoapi/', data=data, files=files)
         if response.status_code == 201:
@@ -86,13 +82,26 @@ def login(request):
     context = {"form": form}
     return render(request, "login.html", context)
 
-def videoview(request):
-    # SENJU ADD - create an api for comments and access comments by consuming that api
-    # To create an api, create a new app called commentsapi or give some name
-    # Follow the steps by referring the links or you can check the videoapi folder as well
-    # You need to first add comments ka model in model.py. 
-    # Add that model in admin.py
-    # Create a serializer
-    # Then create your views and add URLs as per need.
-    # I think just a put/get request is more than enough, cause we are not providing functionality for delete and update.
-    pass
+def videoview(request, videoID):
+    video = requests.get('http://localhost:8000/api/videoapi/' + str(videoID)).json()
+    comments = requests.get('http://localhost:8000/api/commentapi/videos/' + str(videoID) + '/comments/').json()
+    count = len(comments)
+    video['visits'] = video['visits'] + 1
+    if request.method == "POST":
+        if 'Addcomment' in request.POST:
+            comment_text = request.POST['Addcomment']
+            data = {
+                "user": request.user.pk,
+                "username": request.user.username,
+                "comment_text": comment_text,
+            }
+            requests.post('http://localhost:8000/api/commentapi/videos/' + str(videoID) + '/comments/', data=data)
+        elif 'Like' in request.POST:
+            video['likes'] = video['likes'] + 1
+        elif 'Dislike' in request.POST:
+            video['dislikes'] = video['dislikes'] + 1
+        requests.patch('http://localhost:8000/api/videoapi/' + str(videoID), data=video)
+        return redirect('ViewVideo', videoID=videoID)
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
+    return render(request, 'videoView.html', {'video':video, 'comments':comments, 'count':count, 'num_visits': num_visits})
