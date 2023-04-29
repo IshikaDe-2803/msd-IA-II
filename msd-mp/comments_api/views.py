@@ -11,28 +11,28 @@ from rest_framework.parsers import MultiPartParser
 
 class CommentApiView(APIView):
     serializer_class = CommentSerializer
-    parser_classes = (MultiPartParser, )
 
     # 1. List all
-    def get(self,request,video_id, *args, **kwargs):
+    def get(self, request, pk, *args, **kwargs):
         '''
         List all the video items for given requested user
         '''
-        Comments = comments.objects.get(video_id=video_id)
+        video = NewVideo.objects.get(pk=pk)
+        Comments = comments.objects.filter(video=video)
         serializer = CommentSerializer(Comments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # 2. Create
-    def post(self, request,video_id, *args, **kwargs):
+    def post(self, request, pk, *args, **kwargs):
         '''
         Post a comment
         '''
-        video = NewVideo.objects.get(pk=video_id)
+        # video = NewVideo.objects.get(pk=pk)
         data = {
             "user": request.data.get('user'),
             "username": request.data.get('username'),
             "comment_text": request.data.get('comment_text'),
-            "video": video.id
+            "video": pk,
         }
         serializer = CommentSerializer(data=data)
         if serializer.is_valid():
