@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'comments_api',
     'crispy_forms',
     'django_jenkins',
-    'test_utils',
 ]
 
 CRISPY_TEMPLATE_PACK = 'uni_form'
