@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'main_app', 
     'video_api',
+    'comments_api',
     'crispy_forms',
 ]
 
