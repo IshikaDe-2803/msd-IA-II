@@ -96,7 +96,7 @@
                     <h2>All Videos</h2>
                     <div class="AllVideos">
                         {% for video in videos %}
-                        <!-- <a href="{-% url 'ViewVideo' video.pk %-}"> -->
+                        <a href="{% url 'ViewVideo' video.id %}">
                             <div class="VideoCard">
                                 <img class="video_thumbnail" src="{{video.thumbnail}}" >
                                 <div class="videoCard_info">

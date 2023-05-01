@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'video_api',
     'comments_api',
     'crispy_forms',
+    'django_jenkins',
 ]
 
 CRISPY_TEMPLATE_PACK = 'uni_form'
@@ -134,3 +135,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
 }
+
+import django
+from django.utils.encoding import smart_str
+django.utils.encoding.smart_text = smart_str

@@ -8,6 +8,6 @@ urlpatterns = [
     path("register/", views.register, name="register"),
     path("trending/", views.trending, name="trending"),
     path("upload/", views.upload, name="UploadVideo"),
-    path("", views.homepage, name="ViewVideo"),
-    # re_path(r'^view/(?P<videoID>\d+)/$', views.homepage, name='ViewVideo')
+    path("view/<int:videoID>/", views.videoview, name="ViewVideo"),
+    # re_path(r'^view/<int:videoID>/', views.videoview, name='ViewVideo')
 ]
