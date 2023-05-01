@@ -62,7 +62,7 @@
         <div class="TheMainVideoSection">
             <div class="videos">
                 <video width="1000" height="500" controls>
-                    <source src={{video.video.url}} type="video/mp4">
+                    <source src={{video.video}} type="video/mp4">
                 </video>
 
                 <div class="Video_section">
@@ -95,7 +95,7 @@
                     <p>{{ video.likes }} likes &nbsp; ● Streamed live on {{ video.date }} &nbsp; ● {{ video.visits }}
                         Views</p>
                     {% if num_visits != 0 and user.is_authenticated %}
-                    <p>You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.</p>
+                    <p>You have visited this page {{ num_visits }} time{{ num_visits|pluralize }} today.</p>
                     {% endif %}
                     <div class="Next_ROW" style="height: 1.5px;width:1070px;"></div>
 

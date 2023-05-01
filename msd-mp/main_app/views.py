@@ -87,6 +87,7 @@ def videoview(request, videoID):
     comments = requests.get('http://localhost:8000/api/commentapi/videos/' + str(videoID) + '/comments/').json()
     count = len(comments)
     video['visits'] = video['visits'] + 1
+    requests.patch('http://localhost:8000/api/videoapi/' + str(videoID), data=video)
     if request.method == "POST":
         if 'Addcomment' in request.POST:
             comment_text = request.POST['Addcomment']

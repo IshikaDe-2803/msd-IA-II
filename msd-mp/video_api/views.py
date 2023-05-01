@@ -90,7 +90,7 @@ class VideoTrendingApiView(APIView):
         '''
         List all the video items for given requested user
         '''
-        videos = sorted(NewVideo.objects.all(), key=lambda x: x.visits, reverse=True)[0:10]
+        videos = sorted(NewVideo.objects.all(), key=lambda x: x.visits, reverse=True)[0:5]
         serializer = VideoSerializer(videos, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

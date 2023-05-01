@@ -92,6 +92,7 @@
                     <h2>Trending</h2>
                     <div class="AllVideos">
                         {% for video in trending %}
+                        <a href="{% url 'ViewVideo' video.id %}"></a>
                             <div class="VideoCard">
                                 <img class="video_thumbnail"
                                     src={{video.thumbnail}}
@@ -101,7 +102,8 @@
                                         aria-hidden="true"></i>
                                     <div class="video_text">
                                         <h4>{{video.title}}</h4>
-                                        <p>{{video.user}}</p>
+                                        <p>{{video.username}} ● {{ video.visits }}
+                                            Views</p> 
                                         <p>{{video.likes}} Likes &nbsp; &#9679;
                                             Streamed on {{video.date}}</p>
                                     </div>
